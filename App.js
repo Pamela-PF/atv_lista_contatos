@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 
+
 export default function App() {
   const [ contato, setContato ] = useState('')
   const [ telefone, setTelefone ] = useState ('')
@@ -18,10 +19,12 @@ export default function App() {
       setContadorContatos(contadorContatos + 1)
       return [{ key: contadorContatos.toString(), value: contato, telefone: telefone }, ...contatos]
     })
+    console.log(contatos);
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.telaPrincipalView}>
+      <Text style={styles.textoTitulo}>Lista de contatos</Text>
       <View>
         <TextInput
           onChangeText={capturarContato}
@@ -36,15 +39,16 @@ export default function App() {
         <Button
           title="Adicionar contato"
           onPress={adicionarContato}
+          color='#363636'
         />
       </View>
       <FlatList
         data={contatos}
         renderItem={
           c => (
-            <View>
-              <Text>{c.item.value}</Text>
-              <Text>{c.item.telefone}</Text>
+            <View style={styles.itemNaLista}>
+              <Text>Nome: {c.item.value}</Text>
+              <Text>Telefone: {c.item.telefone}</Text>
             </View>
           )
         }
@@ -54,10 +58,22 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  telaPrincipalView: {
+    padding: 40,
+    backgroundColor: '#F0E68C',
   },
+  itemNaLista: {
+    padding: 12,
+    backgroundColor: '#C0C0C0',
+    borderColor: '#808080',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginTop:8
+  },
+  textoTitulo: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 12
+  }
 });
